@@ -1,11 +1,14 @@
 // gameboard as an array inside of a Gameboard object
-const gameBoard = {
+
+
+const gameBoard = (function () {
+    const printBoard = {
     board: [ "A1", "B1", "C1", 
             "A2", "B2", "C2", 
-            "A3", "B3", "C3" ]
-} 
-
-const winningBoards = {
+            "A3", "B3", "C3" ]}
+    console.log(printBoard);
+    
+    const winningBoards = {
     1: ["A1", "B1", "C1" ],
     2: ["A2", "B2", "C2" ],
     3: ["A3", "B3", "C3" ],
@@ -15,8 +18,28 @@ const winningBoards = {
     6: ["C1", "C2", "C1" ],
 
     7: ["A1", "B2", "C3" ],
-    8: ["A3", "B2", "C1" ],
-}
+    8: ["A3", "B2", "C1" ]}
+    console.log(winningBoards)
+    
+    return printBoard, winningBoards
+})(); 
+
+console.log(gameBoard.printBoard)
+
+
+
+// const winningBoards = (function () {
+//     1: ["A1", "B1", "C1" ],
+//     2: ["A2", "B2", "C2" ],
+//     3: ["A3", "B3", "C3" ],
+
+//     4: ["A1", "A2", "A3" ],
+//     5: ["B1", "B2", "B3" ],
+//     6: ["C1", "C2", "C1" ],
+
+//     7: ["A1", "B2", "C3" ],
+//     8: ["A3", "B2", "C1" ],
+// })();
 
 function createPlayer(name, mark) {
     let turn = "";
@@ -47,6 +70,7 @@ function isSquareTakenPlayerTwo(square) {
 }
 
 function gameController() {
+
 
     // a player will choose a square - by typing in console first
     let turn = playerChoice();
