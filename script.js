@@ -9,13 +9,17 @@ const gameBoard = (function () {
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < columns; j++) {
-            board[i].push(j)
+            board[i].push(Cell());
         }
     }
 
-    console.log(board)
+    console.log(board) 
 
     const getBoard = () => board;
+
+    const changeToken = (cell, player) => {
+
+    }
 
     // const printBoard = {
     // board: [ "A1", "B1", "C1", 
@@ -34,24 +38,23 @@ const gameBoard = (function () {
     //     return printBoard
     // }
 
-    const changeBoard = []
-        
-    const winningBoards = {
-    1: ["A1", "B1", "C1" ],
-    2: ["A2", "B2", "C2" ],
-    3: ["A3", "B3", "C3" ],
-
-    4: ["A1", "A2", "A3" ],
-    5: ["B1", "B2", "B3" ],
-    6: ["C1", "C2", "C1" ],
-
-    7: ["A1", "B2", "C3" ],
-    8: ["A3", "B2", "C1" ]}
+    const printBoard = () => {
+        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
+        console.log(boardWithCellValues);
+    }
     
-    
-    return { getBoard, changeBoard, winningBoards }
-})(); 
+    return { getBoard, changeToken, printBoard }
+})();  
 
+function Cell() {
+    let value = 0;
+
+    const addToken = (player) => {value = player}
+
+    const getValue = () => value;
+
+    return { addToken, getValue }
+} 
  
 function createPlayer(name, mark) {
     let turn = "";
@@ -91,6 +94,18 @@ const gameController = (function () {
     } 
     
     // if player array matches win, end game as win
+
+      // const winningBoards = {
+    // 1: ["A1", "B1", "C1" ],
+    // 2: ["A2", "B2", "C2" ],
+    // 3: ["A3", "B3", "C3" ],
+
+    // 4: ["A1", "A2", "A3" ],
+    // 5: ["B1", "B2", "B3" ],
+    // 6: ["C1", "C2", "C1" ],
+
+    // 7: ["A1", "B2", "C3" ],
+    // 8: ["A3", "B2", "C1" ]}
 
     // if no more board, end game as tie
     // if not next player turn until end game
