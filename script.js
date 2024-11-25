@@ -1,12 +1,41 @@
 // gameboard as an array inside of a Gameboard object
 
 const gameBoard = (function () {
-    const printBoard = {
-    board: [ "A1", "B1", "C1", 
-            "A2", "B2", "C2", 
-            "A3", "B3", "C3" ]}
-    console.log(printBoard);
-    
+
+    const rows = 3;
+    const columns = 3;
+    const board = [];
+
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+        for (let j = 0; j < columns; j++) {
+            board[i].push(j)
+        }
+    }
+
+    console.log(board)
+
+    const getBoard = () => board;
+
+    // const printBoard = {
+    // board: [ "A1", "B1", "C1", 
+    //         "A2", "B2", "C2", 
+    //         "A3", "B3", "C3" ]}
+
+    // const changeBoard = function(change, mark) { 
+    //     printBoard.board.forEach(myFunction)
+
+    //     function myFunction(item) {
+    //         if (item == change) {
+    //         item = mark;
+    //         }
+    //     }
+    //     console.log(printBoard.board)
+    //     return printBoard
+    // }
+
+    const changeBoard = []
+        
     const winningBoards = {
     1: ["A1", "B1", "C1" ],
     2: ["A2", "B2", "C2" ],
@@ -20,11 +49,10 @@ const gameBoard = (function () {
     8: ["A3", "B2", "C1" ]}
     
     
-    return printBoard, winningBoards
+    return { getBoard, changeBoard, winningBoards }
 })(); 
 
-console.log(gameBoard.printBoard)
-
+ 
 function createPlayer(name, mark) {
     let turn = "";
     if (mark == "X") {
@@ -57,19 +85,15 @@ const gameController = (function () {
     return playerOne.chosenSquares.includes(square)
     }
 
-    function isSquareTakenPlayerTwo(square) {
-    return playerTwo.chosenSquares.includes(square)
-    }
-
     if (!(isSquareTakenPlayerOne(choice) || isSquareTakenPlayerOne(choice))) {
         playerOne.chosenSquares.push(choice);
-        console.log(playerOne.chosenSquares);
-
-    }
-
-
+        // gameBoard.changeBoard(choice, playerOne.mark)
+    } 
+    
     // if player array matches win, end game as win
 
     // if no more board, end game as tie
     // if not next player turn until end game
 })()
+
+
