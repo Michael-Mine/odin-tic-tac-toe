@@ -56,42 +56,54 @@ function Cell() {
     return { addToken, getValue }
 } 
  
-function createPlayer(name, mark) {
-    let turn = "";
-    if (mark == "X") {
-        turn = "yes"
-    } else {
-        turn = "no"
-    }
-    const chosenSquares = [];
-    return { name, mark, turn, chosenSquares }
+function createPlayer(name, token) {
+    
+    const chosenCells = [];
+    return { name, token, chosenCells }
 }
-
-const playerOne = createPlayer("Mike", "X");
-const playerTwo = createPlayer("Monika", "O")
+// token 1 will be X and go first (explain on UI)
+const playerOne = createPlayer("Mike", 1);
+const playerTwo = createPlayer("Monika", 2)
 
 // an object to control the flow of the game itself.
 
 const gameController = (function () {
 
-    // a player will choose a square - by typing in console first
+    const players = [playerOne, playerTwo];
+    
+    let activePlayer = players[0];
 
-    function playerChoice() {
-    return prompt("Player 1 turn");
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
 
-    let choice = playerChoice();
+    const getActivePlayer = () => activePlayer;
+
+    const printNewRound = () => {
+        gameBoard.printBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
+    }
+
+    printNewRound();
+
+    // a player will choose a square - by typing in console first
+
+    // function playerChoice() {
+    // return prompt("Player 1 turn");
+    // }
+
+    // let choice = playerChoice();
 
     // if square is available (check both players array), add to player array & change board
 
-    function isSquareTakenPlayerOne(square) {
-    return playerOne.chosenSquares.includes(square)
-    }
+    // function isSquareTakenPlayerOne(square) {
+    // return playerOne.chosenSquares.includes(square)
+    // }
 
-    if (!(isSquareTakenPlayerOne(choice) || isSquareTakenPlayerOne(choice))) {
-        playerOne.chosenSquares.push(choice);
+    // if (!(isSquareTakenPlayerOne(choice) || isSquareTakenPlayerOne(choice))) {
+    //     playerOne.chosenSquares.push(choice);
         // gameBoard.changeBoard(choice, playerOne.mark)
-    } 
+    // } 
     
     // if player array matches win, end game as win
 
@@ -109,6 +121,6 @@ const gameController = (function () {
 
     // if no more board, end game as tie
     // if not next player turn until end game
-})()
+})() 
 
 
