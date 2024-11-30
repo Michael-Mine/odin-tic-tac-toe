@@ -1,5 +1,3 @@
-// gameboard as an array inside of a Gameboard object
-
 const gameBoard = (function () {
 
     const rows = 3;
@@ -17,26 +15,13 @@ const gameBoard = (function () {
 
     const getBoard = () => board;
 
-    const changeToken = (cell, player) => {
+    const changeToken = (choice, player) => {
+        const row = Number(choice.charAt(0));
+        const column = Number(choice.charAt(1));
 
+        board[row][column].addToken(player);
+        
     }
-
-    // const printBoard = {
-    // board: [ "A1", "B1", "C1", 
-    //         "A2", "B2", "C2", 
-    //         "A3", "B3", "C3" ]}
-
-    // const changeBoard = function(change, mark) { 
-    //     printBoard.board.forEach(myFunction)
-
-    //     function myFunction(item) {
-    //         if (item == change) {
-    //         item = mark;
-    //         }
-    //     }
-    //     console.log(printBoard.board)
-    //     return printBoard
-    // }
 
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
@@ -61,11 +46,10 @@ function createPlayer(name, token) {
     const chosenCells = [];
     return { name, token, chosenCells }
 }
+
 // token 1 will be X and go first (explain on UI)
 const playerOne = createPlayer("Mike", 1);
 const playerTwo = createPlayer("Monika", 2)
-
-// an object to control the flow of the game itself.
 
 const gameController = (function () {
 
@@ -84,26 +68,19 @@ const gameController = (function () {
         console.log(`${getActivePlayer().name}'s turn.`);
     }
 
+    // a player will choose a square - by typing in console first
+    const playRound = (choice) => {
+        console.log(`${getActivePlayer().name} chooses ${choice}`);
+
+        gameBoard.changeToken(choice, getActivePlayer().token);
+
+        switchPlayerTurn();
+        printNewRound();
+    }
+
     printNewRound();
 
-    // a player will choose a square - by typing in console first
-
-    // function playerChoice() {
-    // return prompt("Player 1 turn");
-    // }
-
-    // let choice = playerChoice();
-
-    // if square is available (check both players array), add to player array & change board
-
-    // function isSquareTakenPlayerOne(square) {
-    // return playerOne.chosenSquares.includes(square)
-    // }
-
-    // if (!(isSquareTakenPlayerOne(choice) || isSquareTakenPlayerOne(choice))) {
-    //     playerOne.chosenSquares.push(choice);
-        // gameBoard.changeBoard(choice, playerOne.mark)
-    // } 
+    return { playRound, getActivePlayer }
     
     // if player array matches win, end game as win
 
@@ -123,4 +100,7 @@ const gameController = (function () {
     // if not next player turn until end game
 })() 
 
+gameController.playRound("02");  
+
+gameController.playRound("01");  
 
