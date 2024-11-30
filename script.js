@@ -11,17 +11,21 @@ const gameBoard = (function () {
         }
     }
 
-    console.log(board) 
-
     const getBoard = () => board;
 
     const changeToken = (choice, player) => {
         const row = Number(choice.charAt(0));
         const column = Number(choice.charAt(1));
 
+        if (board[row][column].getValue() !== 0) {
+            console.log("Square is not available, please choose again!");
+            return 
+        } 
+
         board[row][column].addToken(player);
-        
-    }
+
+        gameController.switchPlayerTurn();
+    } 
 
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
@@ -74,13 +78,12 @@ const gameController = (function () {
 
         gameBoard.changeToken(choice, getActivePlayer().token);
 
-        switchPlayerTurn();
         printNewRound();
     }
 
     printNewRound();
 
-    return { playRound, getActivePlayer }
+    return { switchPlayerTurn, getActivePlayer, playRound }
     
     // if player array matches win, end game as win
 
@@ -100,7 +103,7 @@ const gameController = (function () {
     // if not next player turn until end game
 })() 
 
-gameController.playRound("02");  
-
-gameController.playRound("01");  
+gameController.playRound("00") 
+gameController.playRound("01")
+gameController.playRound("01")  
 
