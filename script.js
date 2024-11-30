@@ -23,16 +23,25 @@ const gameBoard = (function () {
         } 
 
         board[row][column].addToken(player);
-
-        gameController.switchPlayerTurn();
     } 
 
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
         console.log(boardWithCellValues);
     }
+
+    const checkWin = (token) => {
+        console.log(token)  
+        if (token === board[0][0].getValue() && 
+            token === board[0][1].getValue() && 
+            token === board[0][2].getValue()) { 
+            console.log("WIN");    
+        } else {
+            gameController.switchPlayerTurn();
+        } 
+    }
     
-    return { getBoard, changeToken, printBoard }
+    return { getBoard, changeToken, printBoard, checkWin }
 })();  
 
 function Cell() {
@@ -65,6 +74,7 @@ const gameController = (function () {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
 
+    // for UI version
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
@@ -77,6 +87,13 @@ const gameController = (function () {
         console.log(`${getActivePlayer().name} chooses ${choice}`);
 
         gameBoard.changeToken(choice, getActivePlayer().token);
+
+        //check board for win 
+        gameBoard.checkWin(activePlayer.token) 
+
+        // if player token matches winning boards
+
+        //check board for draw
 
         printNewRound();
     }
@@ -104,6 +121,7 @@ const gameController = (function () {
 })() 
 
 gameController.playRound("00") 
+gameController.playRound("11") 
 gameController.playRound("01")
-gameController.playRound("01")  
-
+gameController.playRound("21") 
+gameController.playRound("02")
