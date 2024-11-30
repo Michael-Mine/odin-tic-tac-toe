@@ -32,12 +32,18 @@ const gameBoard = (function () {
 
     const checkWin = (token) => {
         console.log(token)  
-        if (token === board[0][0].getValue() && 
-            token === board[0][1].getValue() && 
-            token === board[0][2].getValue()) { 
+        if (
+        token === board[0][0].getValue() && token === board[0][1].getValue() && token === board[0][2].getValue() ||
+        token === board[1][0].getValue() && token === board[1][1].getValue() && token === board[1][2].getValue() ||
+        token === board[2][0].getValue() && token === board[2][1].getValue() && token === board[2][2].getValue() ||
+
+        token === board[0][0].getValue() && token === board[1][0].getValue() && token === board[2][0].getValue() ||
+        token === board[0][1].getValue() && token === board[1][1].getValue() && token === board[2][1].getValue() ||
+        token === board[0][2].getValue() && token === board[1][2].getValue() && token === board[2][2].getValue() ||
+
+        token === board[0][0].getValue() && token === board[1][1].getValue() && token === board[2][2].getValue() ||
+        token === board[0][2].getValue() && token === board[1][1].getValue() && token === board[0][2].getValue()) { 
             console.log("WIN");    
-        } else {
-            gameController.switchPlayerTurn();
         } 
     }
     
@@ -88,13 +94,11 @@ const gameController = (function () {
 
         gameBoard.changeToken(choice, getActivePlayer().token);
 
-        //check board for win 
         gameBoard.checkWin(activePlayer.token) 
-
-        // if player token matches winning boards
 
         //check board for draw
 
+        switchPlayerTurn();
         printNewRound();
     }
 
@@ -102,26 +106,21 @@ const gameController = (function () {
 
     return { switchPlayerTurn, getActivePlayer, playRound }
     
-    // if player array matches win, end game as win
-
-      // const winningBoards = {
-    // 1: ["A1", "B1", "C1" ],
-    // 2: ["A2", "B2", "C2" ],
-    // 3: ["A3", "B3", "C3" ],
-
-    // 4: ["A1", "A2", "A3" ],
-    // 5: ["B1", "B2", "B3" ],
-    // 6: ["C1", "C2", "C1" ],
-
-    // 7: ["A1", "B2", "C3" ],
-    // 8: ["A3", "B2", "C1" ]}
-
-    // if no more board, end game as tie
-    // if not next player turn until end game
 })() 
 
-gameController.playRound("00") 
-gameController.playRound("11") 
-gameController.playRound("01")
+gameController.playRound("10") 
+gameController.playRound("20") 
+gameController.playRound("11")
 gameController.playRound("21") 
-gameController.playRound("02")
+gameController.playRound("12") 
+
+    // 00, 01, 02
+    // 10, 11, 12
+    // 20, 21, 22
+
+    // 00, 10, 20
+    // 01, 11, 21
+    // 02, 12, 22
+
+    // 00, 11, 22
+    // 02, 11, 02
