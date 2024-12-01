@@ -42,12 +42,23 @@ const gameBoard = (function () {
         token === board[0][2].getValue() && token === board[1][2].getValue() && token === board[2][2].getValue() ||
 
         token === board[0][0].getValue() && token === board[1][1].getValue() && token === board[2][2].getValue() ||
-        token === board[0][2].getValue() && token === board[1][1].getValue() && token === board[0][2].getValue()) { 
-            console.log("WIN");    
-        } 
+        token === board[2][0].getValue() && token === board[1][1].getValue() && token === board[0][2].getValue()) { 
+            console.log("WIN");     
+        } else {
+            checkDraw();
+        }
     }
-    
-    return { getBoard, changeToken, printBoard, checkWin }
+
+    const checkDraw = () => {
+        if (board.every((row) => row.every((cell) => cell.getValue() !== 0))) { 
+            console.log("DRAW");  
+        } else {
+            gameController.switchPlayerTurn();
+            gameController.printNewRound();
+        }
+    }
+
+    return { getBoard, changeToken, printBoard, checkWin, checkDraw }
 })();  
 
 function Cell() {
@@ -94,25 +105,24 @@ const gameController = (function () {
 
         gameBoard.changeToken(choice, getActivePlayer().token);
 
-        gameBoard.checkWin(activePlayer.token) 
-
-        //check board for draw
-
-        switchPlayerTurn();
-        printNewRound();
+        gameBoard.checkWin(activePlayer.token); 
     }
 
     printNewRound();
 
-    return { switchPlayerTurn, getActivePlayer, playRound }
+    return { switchPlayerTurn, getActivePlayer, playRound, printNewRound }
     
 })() 
 
 gameController.playRound("10") 
 gameController.playRound("20") 
-gameController.playRound("11")
-gameController.playRound("21") 
-gameController.playRound("12") 
+gameController.playRound("21")
+gameController.playRound("11") 
+gameController.playRound("00") 
+gameController.playRound("01") 
+gameController.playRound("02")
+gameController.playRound("12")
+gameController.playRound("22")     
 
     // 00, 01, 02
     // 10, 11, 12
