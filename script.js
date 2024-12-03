@@ -25,13 +25,12 @@ const gameBoard = (function () {
         board[row][column].addToken(player);
     } 
     // only for console game before adding UI
-    const printBoard = () => {
-        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
-        console.log(boardWithCellValues);
-    }
+    // const printBoard = () => {
+    //     const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
+    //     console.log(boardWithCellValues);
+    // }
 
     const checkWin = (token) => {
-        console.log(token)  
         if (
         token === board[0][0].getValue() && token === board[0][1].getValue() && token === board[0][2].getValue() ||
         token === board[1][0].getValue() && token === board[1][1].getValue() && token === board[1][2].getValue() ||
@@ -54,11 +53,11 @@ const gameBoard = (function () {
             console.log("DRAW");  
         } else {
             gameController.switchPlayerTurn();
-            gameController.printNewRound();
+            // gameController.printNewRound();
         }
     }
 
-    return { getBoard, changeToken, printBoard, checkWin, checkDraw }
+    return { getBoard, changeToken, checkWin, checkDraw }
 })();  
 
 function Cell() {
@@ -93,23 +92,23 @@ const gameController = (function () {
     // for UI version
     const getActivePlayer = () => activePlayer;
     // for console version
-    const printNewRound = () => {
-        gameBoard.printBoard();
-        console.log(`${getActivePlayer().name}'s turn.`);
-    }
+    // const printNewRound = () => {
+    //     gameBoard.printBoard();
+    //     console.log(`${getActivePlayer().name}'s turn.`);
+    // }
 
-    // a player will choose a square - by typing in console first
     const playRound = (row, column) => {
-        console.log(`${getActivePlayer().name} chooses ${row} ${column}`);
+        
+        // console.log(`${getActivePlayer().name} chooses ${row} ${column}`);
 
         gameBoard.changeToken(row, column, getActivePlayer().token);
 
         gameBoard.checkWin(activePlayer.token); 
     }
 
-    printNewRound();
+    // printNewRound();
 
-    return { switchPlayerTurn, getActivePlayer, playRound, printNewRound }
+    return { switchPlayerTurn, getActivePlayer, playRound }
     
 })() 
 
