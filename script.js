@@ -24,7 +24,7 @@ const gameBoard = (function () {
 
         board[row][column].addToken(player);
     } 
-
+    // only for console game before adding UI
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
         console.log(boardWithCellValues);
