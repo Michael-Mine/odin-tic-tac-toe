@@ -13,11 +13,14 @@ const gameBoard = (function () {
 
     const getBoard = () => board;
 
+    const infoDiv = document.querySelector('.info');
+
     const changeToken = (row, column, player) => {
         // const row = Number(choice.charAt(0));
         // const column = Number(choice.charAt(1));
 
         if (board[row][column].getValue() !== 0) {
+            infoDiv.textContent = "Square is not available, please choose again!";
             console.log("Square is not available, please choose again!");
             return 
         } 
@@ -42,6 +45,7 @@ const gameBoard = (function () {
 
         token === board[0][0].getValue() && token === board[1][1].getValue() && token === board[2][2].getValue() ||
         token === board[2][0].getValue() && token === board[1][1].getValue() && token === board[0][2].getValue()) { 
+            infoDiv.textContent = "WIN"
             console.log("WIN");     
         } else {
             checkDraw();
@@ -50,6 +54,7 @@ const gameBoard = (function () {
 
     const checkDraw = () => {
         if (board.every((row) => row.every((cell) => cell.getValue() !== 0))) { 
+            infoDiv.textContent = "DRAW"
             console.log("DRAW");  
         } else {
             gameController.switchPlayerTurn();
@@ -131,7 +136,16 @@ const screenController = (function () {
                 cellButton.classList.add("cell");
                 cellButton.dataset.row = rowIndex; 
                 cellButton.dataset.column = columnIndex;
-                cellButton.textContent = cell.getValue();
+
+                // cellButton.textContent = cell.getValue();
+                if (cell.getValue() === 0) {
+                    cellButton.textContent = "";
+                } else if (cell.getValue() === 1) {
+                    cellButton.textContent = "X";
+                } else {
+                    cellButton.textContent = "O";
+                }
+
                 boardDiv.appendChild(cellButton);
             })
         })
