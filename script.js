@@ -73,8 +73,7 @@ function Cell() {
  
 function createPlayer(name, token) {
     
-    const chosenCells = [];
-    return { name, token, chosenCells }
+    return { name, token }
 }
 
 // token 1 will be X and go first (explain on UI)
@@ -114,15 +113,42 @@ const gameController = (function () {
     
 })() 
 
-gameController.playRound("10") 
-gameController.playRound("20") 
-gameController.playRound("21")
-gameController.playRound("11") 
-gameController.playRound("00") 
-gameController.playRound("01") 
-gameController.playRound("02")
-gameController.playRound("12")
-gameController.playRound("22")     
+const screenController = (function () {
+    const playerTurnDiv = document.querySelector('.turn');
+    const boardDiv = document.querySelector('.board');
+
+    const updateScreen = () => {
+        boardDiv.textContent = "";
+
+        const board = gameBoard.getBoard();
+        const activePlayer = gameController.getActivePlayer();
+
+        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`
+
+        board.forEach(row => {
+            row.forEach((cell, index) => {
+                const cellButton = document.createElement("button");
+                
+                cellButton.classList.add("cell");
+                cellButton.textContent = cell.getValue();
+                boardDiv.appendChild(cellButton);
+            })
+        })
+    }
+
+    
+    updateScreen();
+})()
+
+// gameController.playRound("10") 
+// gameController.playRound("20") 
+// gameController.playRound("21")
+// gameController.playRound("11") 
+// gameController.playRound("00") 
+// gameController.playRound("01") 
+// gameController.playRound("02")
+// gameController.playRound("12")
+// gameController.playRound("22")     
 
     // 00, 01, 02
     // 10, 11, 12
