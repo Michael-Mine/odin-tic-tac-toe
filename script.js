@@ -13,9 +13,9 @@ const gameBoard = (function () {
 
     const getBoard = () => board;
 
-    const changeToken = (choice, player) => {
-        const row = Number(choice.charAt(0));
-        const column = Number(choice.charAt(1));
+    const changeToken = (row, column, player) => {
+        // const row = Number(choice.charAt(0));
+        // const column = Number(choice.charAt(1));
 
         if (board[row][column].getValue() !== 0) {
             console.log("Square is not available, please choose again!");
@@ -92,17 +92,17 @@ const gameController = (function () {
 
     // for UI version
     const getActivePlayer = () => activePlayer;
-
+    // for console version
     const printNewRound = () => {
         gameBoard.printBoard();
         console.log(`${getActivePlayer().name}'s turn.`);
     }
 
     // a player will choose a square - by typing in console first
-    const playRound = (choice) => {
-        console.log(`${getActivePlayer().name} chooses ${choice}`);
+    const playRound = (row, column) => {
+        console.log(`${getActivePlayer().name} chooses ${row} ${column}`);
 
-        gameBoard.changeToken(choice, getActivePlayer().token);
+        gameBoard.changeToken(row, column, getActivePlayer().token);
 
         gameBoard.checkWin(activePlayer.token); 
     }
@@ -125,18 +125,27 @@ const screenController = (function () {
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`
 
-        board.forEach(row => {
-            row.forEach((cell, index) => {
+        board.forEach((row, rowIndex) => {
+            row.forEach((cell, columnIndex) => {
                 const cellButton = document.createElement("button");
                 
                 cellButton.classList.add("cell");
+                cellButton.dataset.row = rowIndex; 
+                cellButton.dataset.column = columnIndex;
                 cellButton.textContent = cell.getValue();
                 boardDiv.appendChild(cellButton);
             })
         })
     }
 
-    
+    function clickHandlerBoard(e) {
+        const row = e.target.dataset.row;
+        const column = e.target.dataset.column;
+        gameController.playRound(row, column); 
+        updateScreen();
+    }
+    boardDiv.addEventListener("click", clickHandlerBoard); 
+
     updateScreen();
 })()
 
