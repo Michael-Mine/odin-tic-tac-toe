@@ -2,31 +2,44 @@
     color: rgb(209, 213, 219);
     background-color: rgb(17, 24, 39);
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.turn {
+  font-size: 1.5rem;
+}
 
 .board {
-    display: grid;
-    height: 500px;
-    width: 500px;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    border: 1px solid black;
-    gap: 2px;
-    padding: 2px;
-    background-color: darkolivegreen;
+  display: grid;
+  height: 500px;
+  width: 500px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  border: 1px solid black;
+  gap: 2px;
+  padding: 2px;
+  background-color: darkolivegreen;
   }
   
-  .cell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 2rem;
-    border: 1px solid grey;
-    background: lightyellow;
-    cursor: pointer;
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 8rem;
+  color: darkolivegreen;
+  border: 1px solid grey;
+  /* background: lightellow; */
+  cursor: pointer;
 
-  }
-
-  .cell:hover {
-    background-color: aqua;
-  }
+}
+/* .cell:hover {
+  background-color: aqua;
+} */
+.info {
+  font-size: 1.2rem;
+}

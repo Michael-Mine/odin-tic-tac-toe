@@ -21,11 +21,13 @@ const gameBoard = (function () {
 
         if (board[row][column].getValue() !== 0) {
             infoDiv.textContent = "Square is not available, please choose again!";
-            console.log("Square is not available, please choose again!");
+            // console.log("Square is not available, please choose again!");
             return 
         } 
 
         board[row][column].addToken(player);
+        checkWin(player); 
+        
     } 
     // only for console game before adding UI
     // const printBoard = () => {
@@ -46,7 +48,7 @@ const gameBoard = (function () {
         token === board[0][0].getValue() && token === board[1][1].getValue() && token === board[2][2].getValue() ||
         token === board[2][0].getValue() && token === board[1][1].getValue() && token === board[0][2].getValue()) { 
             infoDiv.textContent = "WIN"
-            console.log("WIN");     
+            // console.log("WIN");     
         } else {
             checkDraw();
         }
@@ -55,9 +57,10 @@ const gameBoard = (function () {
     const checkDraw = () => {
         if (board.every((row) => row.every((cell) => cell.getValue() !== 0))) { 
             infoDiv.textContent = "DRAW"
-            console.log("DRAW");  
+            // console.log("DRAW");  
         } else {
             gameController.switchPlayerTurn();
+            infoDiv.textContent = "";
             // gameController.printNewRound();
         }
     }
@@ -108,7 +111,7 @@ const gameController = (function () {
 
         gameBoard.changeToken(row, column, getActivePlayer().token);
 
-        gameBoard.checkWin(activePlayer.token); 
+        // gameBoard.checkWin(activePlayer.token); 
     }
 
     // printNewRound();
