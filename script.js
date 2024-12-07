@@ -161,7 +161,15 @@ const gameController = (function () {
 
     nextButton.addEventListener('click', nextMatch);
 
-    
+    const restartButton = document.querySelector("#restart-button");
+
+    function restartMatch(e) {
+        activePlayer = lastWinner;
+        gameBoard.resetBoard();
+        screenController.updateScreen();
+    }
+
+    restartButton.addEventListener('click', restartMatch);
 
     // printNewRound();
 
