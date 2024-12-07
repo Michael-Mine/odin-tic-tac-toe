@@ -79,17 +79,34 @@ function Cell() {
 } 
  
 function createPlayer(name, token) {
+
+    function changeName(newName) { 
+        this.name = newName};
     
-    return { name, token }
+    return { name, token, changeName }
 }
 
-// token 1 will be X and go first (explain on UI)
-const playerOne = createPlayer("Mike", 1);
-const playerTwo = createPlayer("Monika", 2)
+const playerOne = createPlayer("X", 1);
+const playerTwo = createPlayer("O", 2);
+
+const startButton = document.querySelector("#names-button");
+
+function addPlayers(e) {
+
+    const playerOneNewName = document.getElementById('player-one-name').value;
+    const playerTwoNewName = document.getElementById('player-two-name').value;
+
+    playerOne.changeName(playerOneNewName);
+    playerTwo.changeName(playerTwoNewName);
+
+    screenController.updateScreen();
+}
+
+startButton.addEventListener('click', addPlayers)
 
 const gameController = (function () {
 
-    const players = [playerOne, playerTwo];
+    const players = [playerOne, playerTwo]; 
     
     let activePlayer = players[0];
 
@@ -160,9 +177,11 @@ const screenController = (function () {
         gameController.playRound(row, column); 
         updateScreen();
     }
-    boardDiv.addEventListener("click", clickHandlerBoard); 
+    boardDiv.addEventListener("click", clickHandlerBoard);  
 
     updateScreen();
+
+    return { updateScreen }
 })()
 
 // gameController.playRound("10") 
