@@ -24,14 +24,15 @@
 
 .board {
   display: grid;
-  height: 410px;
-  width: 410px;  
+  height: 400px;
+  width: 400px;  
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   border: 1px solid black; 
   gap: 2px;
   padding: 2px;
   background-color: darkolivegreen;
+  margin: 5px;
   }
   
 .cell {
@@ -39,7 +40,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 7rem;
+  font-size: 6.6rem;
   color: darkolivegreen;
   border: 1px solid grey;
   /* background: lightellow; */
