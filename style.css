@@ -1,6 +1,15 @@
+@font-face {
+  font-family: "inter"; 
+  src:
+    url("inter-regular-webfont.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
     color: rgb(209, 213, 219);
     background-color: rgb(17, 24, 39);
+    font-family: 'inter';
 }
 .container {
   display: flex;
@@ -15,8 +24,8 @@
 
 .board {
   display: grid;
-  height: 420px;
-  width: 420px; 
+  height: 410px;
+  width: 410px;  
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   border: 1px solid black; 
