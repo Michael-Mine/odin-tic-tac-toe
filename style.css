@@ -15,8 +15,8 @@
 
 .board {
   display: grid;
-  height: 450px;
-  width: 450px; 
+  height: 440px;
+  width: 440px; 
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   border: 1px solid black;
@@ -42,4 +42,11 @@
 } */
 .info {
   font-size: 1.2rem;
+}
+
+.button {
+  display: flex;
+  gap: 100px;
+  height: 40px;
+  
 }

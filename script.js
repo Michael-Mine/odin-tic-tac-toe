@@ -13,7 +13,6 @@ const gameBoard = (function () {
 
     const getBoard = () => board;
 
-    const infoDiv = document.querySelector('.info');
 
     const changeToken = (row, column, player) => {
         // const row = Number(choice.charAt(0));
@@ -48,6 +47,7 @@ const gameBoard = (function () {
         token === board[0][0].getValue() && token === board[1][1].getValue() && token === board[2][2].getValue() ||
         token === board[2][0].getValue() && token === board[1][1].getValue() && token === board[0][2].getValue()) { 
             infoDiv.textContent = "WIN"
+
             // console.log("WIN");     
         } else {
             checkDraw();
@@ -65,7 +65,17 @@ const gameBoard = (function () {
         }
     }
 
-    return { getBoard, changeToken, checkWin, checkDraw }
+    const resetBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            board[i] = [];
+            for (let j = 0; j < columns; j++) {
+                board[i].push(Cell());
+            }
+        }
+        infoDiv.textContent = "";
+    }
+
+    return { getBoard, changeToken, checkWin, checkDraw, resetBoard }
 })();  
 
 function Cell() {
@@ -89,7 +99,8 @@ function createPlayer(name, token) {
 const playerOne = createPlayer("X", 1);
 const playerTwo = createPlayer("O", 2);
 
-const startButton = document.querySelector("#names-button");
+const namesButton = document.querySelector("#names-button");
+const infoDiv = document.querySelector('.info');
 
 function addPlayers(e) {
 
@@ -102,7 +113,7 @@ function addPlayers(e) {
     screenController.updateScreen();
 }
 
-startButton.addEventListener('click', addPlayers)
+namesButton.addEventListener('click', addPlayers)
 
 const gameController = (function () {
 
@@ -114,13 +125,18 @@ const gameController = (function () {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
 
-    // for UI version
     const getActivePlayer = () => activePlayer;
     // for console version
     // const printNewRound = () => {
     //     gameBoard.printBoard();
     //     console.log(`${getActivePlayer().name}'s turn.`);
     // }
+
+    let lastWinner = players[0];
+
+    const switchLastWinner = () => {
+        lastWinner = lastWinner === players[0] ? players[1] : players[0];
+    }
 
     const playRound = (row, column) => {
         
@@ -131,9 +147,25 @@ const gameController = (function () {
         // gameBoard.checkWin(activePlayer.token); 
     }
 
+    const nextButton = document.querySelector("#next-button");
+
+    function nextMatch(e) {
+        if (infoDiv.textContent === "WIN") {
+            if (activePlayer !== lastWinner) {
+                switchLastWinner();
+            }
+            gameBoard.resetBoard();
+            screenController.updateScreen();
+        }
+    }
+
+    nextButton.addEventListener('click', nextMatch);
+
+    
+
     // printNewRound();
 
-    return { switchPlayerTurn, getActivePlayer, playRound }
+    return { switchPlayerTurn, getActivePlayer, switchLastWinner, playRound }
     
 })() 
 
@@ -177,13 +209,13 @@ const screenController = (function () {
         gameController.playRound(row, column); 
         updateScreen();
     }
-    boardDiv.addEventListener("click", clickHandlerBoard);  
-
+    boardDiv.addEventListener("click", clickHandlerBoard);
+    
     updateScreen();
 
     return { updateScreen }
 })()
-
+// console game logic test
 // gameController.playRound("10") 
 // gameController.playRound("20") 
 // gameController.playRound("21")
